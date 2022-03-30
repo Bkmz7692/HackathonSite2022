@@ -1,0 +1,114 @@
+.header {
+    padding: 0;
+    background-image: url('/img/astrakhan.jpg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    position: relative;
+    height: 40%;
+}
+
+.info {
+    margin-right: 1%;
+    margin-left: 1%;
+    font-size: 24px;
+    list-style-type: none;
+}
+
+.download-section {
+    background-color: dimgrey;
+    padding-top: 20px;
+    height: 30%;
+}
+
+.red-border {
+    border-radius: 10px;
+    border: 2px solid rgb(148, 63, 6);
+    padding: 50px;
+    text-align: center;
+    font-size: 20px;
+}
+
+#footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    padding: 10px;
+    background: #d66509;
+    color: #fff;
+    width: 100%;
+}
+
+.lead {
+    color: #ffffff;
+    font-size: 30px;
+}
+
+.jumbotron {
+    width: 100%;
+    background: rgb(255, 255, 255);
+    color: rgb(122, 8, 8);
+}
+
+.text {
+    color: #d66509;
+    font-size: 50 px;
+}
+
+#Model {
+    position: relative;
+    height: 100%;
+}
+
+#Frame {
+    margin-bottom: 40px;
+    margin-top: 40px;
+    height: 400px;
+}
+
+#download {
+    font-size: 24px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+.btn {
+	display: inline-block;	
+	box-sizing: border-box;
+	padding: 0 25px;
+	margin: 0 15px 15px 0;
+	outline: none;
+	border: 1px solid rgb(255, 255, 255);
+	border-radius: 50px;
+	height: 46px;
+	line-height: 46px;
+	font-size: 14px;
+	font-weight: 600;
+	text-decoration: none;
+	color: #444;
+	background-color: rgb(255, 151, 16);
+	box-shadow: 0 4px 6px rgba(28, 208, 240, 0.1), 0 1px 3px rgb(0 0 0 / 8%);
+	cursor: pointer;
+	user-select: none;
+	appearance: none;
+	touch-action: manipulation;  
+	vertical-align: top;
+	transition: box-shadow 0.2s;
+}
+.btn:focus-visible {
+	border: 1px solid #0d88ecdc;
+	outline: none;
+}
+.btn:hover {
+	transition: all 0.2s;
+	box-shadow: 0 7px 14px rgba(1, 225, 255, 0.1), 0 3px 6px rgba(3, 171, 248, 0.08);
+}
+.btn:active {
+	background-color: #808080;
+}
+.btn:disabled {
+	background-color: #eee;
+	border-color: #eee;
+	color: #444;
+	cursor: not-allowed;
+}
+
+
