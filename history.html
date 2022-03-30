@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Архитектурные памятники Астрахани</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+
+<body>
+
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="">Цифровая Астрахань</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="index.html">Главная</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <style type="text/css">
+        #scroller_container {
+            margin: 0 auto;
+            max-width: 100%;
+            width: 1700px;
+            overflow: hidden;
+            line-height: 0;
+            font-size: 0;
+        }
+
+        #scroller_container div {
+            float: left;
+            vertical-align: baseline;
+        }
+
+        #scroller_container>div {
+            position: relative;
+            white-space: nowrap;
+            width: 100%;
+            padding: 22px 0;
+        }
+
+        #scroller_container>div a,
+        #scroller_container>div a img {
+            padding: 0;
+            margin: 0;
+        }
+
+        #scroller_container>div a img {
+            height: 400px;
+            width: auto;
+            margin: 0 1px;
+            border: 0;
+        }
+    </style>
+
+    <script>
+        var _scroller;
+        _scroller = function () { // scroller
+            return {
+                speed: 10, /*скорость, чем больше значние, тем медленнее движение*/
+                direct: -1,/* -1 - движение влево, +1 - вправо*/
+                position: 0,
+                t: null,
+                // Инициализация скроллера
+                init: function () {
+                    var el;
+                    // Установка обработчика колесика мыши
+                    el = document.getElementById('scroller_container');
+                    _scroller.addEvent(el, 'mousewheel', _scroller.wheel);
+                    _scroller.addEvent(el, 'DOMMouseScroll', _scroller.wheel);
+
+                    _scroller.timer(_scroller.direct); // запускаю скроллер
+                },
+
+                // Обработчик колесика мыши
+                wheel: function (e) {
+                    _scroller.stop();
+                    e = e ? e : window.event;
+                    /*var wheelElem = e.target ? e.target : e.srcElement;*/
+                    var wheelData = e.detail ? e.detail * -1 : e.wheelDelta / 40;
+
+                    // В движке WebKit возвращается значение в 100 раз больше
+                    if (Math.abs(wheelData) > 100) {
+                        wheelData = Math.round(wheelData / 100);
+                    }
+                    //_scroller.scroll(wheelData*10);
+                    _scroller.direct = wheelData > 0 ? 1 : -1;
+                    _scroller.timer(_scroller.direct);
+                    if (window.event) {
+                        e.cancelBubble = true;
+                        e.returnValue = false;
+                        e.cancel = true;
+                    }
+                    if (e.stopPropagation && e.preventDefault) {
+                        e.stopPropagation();
+                        e.preventDefault();
+                    }
+                    return false;
+                },
+
+                // Функция скроллера
+                scroll: function (wheel) {
+                    var el = document.getElementById('scroller_container').firstElementChild;
+                    var o, oi, width;
+                    _scroller.position += wheel;
+                    if (wheel > 0) {
+                        if (_scroller.position >= 0) { // берем последнюю картинку и вставляем ёё в начало
+                            // В этот момент можно подгружать более левую картинку и удалить последнюю
+                            o = el;//.firstElementChild; // контейнер с картинками
+                            oi = o.lastElementChild; // последняя картинка вместе с анкором
+                            width = oi.firstElementChild.clientWidth; // размер картинки
+                            o.insertBefore(oi, o.firstElementChild);
+                            _scroller.position -= width;
+                        }
+                    }
+                    else {
+                        o = el;//.firstElementChild; // контейнер с картинками
+                        oi = o.firstElementChild; // первая картинка вместе с анкором
+                        width = oi.firstElementChild.clientWidth; // размер картинки
+                        if (_scroller.position < -width) { // если картинка ушла влево из зоны видимости переношу её в конец списка
+                            // В этот момент можно подгружать следующую картинку и удалить первую
+                            o.appendChild(oi);
+                            _scroller.position += width;
+                        }
+                    }
+                    el.style.left = _scroller.position + 'px';
+                },
+
+                // Таймер скроллера
+                timer: function (wheel) {
+                    _scroller.stop();
+                    _scroller.t = setInterval("_scroller.scroll(" + wheel + ");", _scroller.speed);
+                },
+
+                // Остановка скроллера
+                stop: function () {
+                    if (_scroller.t != null) {
+                        clearInterval(_scroller.t);
+                        _scroller.t = null;
+                    }
+                },
+
+                // назначить обработчик события
+                addEvent: function (el, evType, fn, useCapture) {
+                    if (el.addEventListener) {
+                        el.addEventListener(evType, fn, useCapture);
+                    } else if (el.attachEvent) {
+                        var r = el.attachEvent('on' + evType, fn);
+                    } else el['on' + evType] = fn;
+                }
+            };
+        }();
+        /*if(!document.funcDomReady)document.funcDomReady=function(){_scroller.init()};
+        else onDomReady(_scroller.init);*/
+        window.onload = function () { setTimeout(_scroller.init, 100); }; // стартуем с задержкой, чтобы все прогрузилось
+    </script>
+
+    <div id="scroller_container" onmousemove="_scroller.stop();" onmouseout="_scroller.timer(_scroller.direct);">
+        <div>
+            <a href="#1" onclick="return!1"><img src="https://www.energovector.com/images/upload/astrakotelnayazast.jpg"
+                    alt=""></a>
+            <a href="#2" onclick="return!1"><img
+                    src="https://arbuztoday.ru/wp-content/uploads/2018/06/VyaBXxadT9g-1170x570.jpg" alt=""></a>
+            <a href="#3" onclick="return!1"><img
+                    src="https://media-cdn.tripadvisor.com/media/photo-s/1d/32/99/b6/caption.jpg" alt=""></a>
+            <a href="#4" onclick="return!1"><img
+                    src="https://ic.pics.livejournal.com/mikhail_doliev/43280850/715919/715919_600.jpg" alt=""></a>
+            <a href="#5" onclick="return!1"><img
+                    src="https://arbuztoday.ru/wp-content/uploads/2019/03/%D0%AD-1-1-of-1-1200x800.jpg" alt=""></a>
+            <a href="#6" onclick="return!1"><img
+                    src="https://arbuztoday.ru/wp-content/uploads/2019/03/%D0%A1%D1%82%D0%B0%D0%BD%D1%86%D0%B8%D1%8F-6-1-of-1.jpg"
+                    alt=""></a>
+        </div>
+    </div>
+
+    </div>
+    <div class="product-device shadow-sm d-none d-md-block"></div>
+    <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+    </div>
+    </section>
+
+    <section id="info">
+        <ul class="text-center info red-border">
+            <font size="5" color="brown" face="fantasy">История Астраханской энергетики</font>
+            <p>
+                <font size="5" color="brown" face="monospace">История Астраханской энергетики начинается с 1897 года,
+                    когда
+                    в
+                    городе известным бельгийским акционерным обществом «Большое Бельгийское акционерное анонимное
+                    общество»
+                    была построена электростанция с паровым хозяйством и пущен первый трамвай. В городе Астрахани
+                    электрическая энергия в промышленных целях почти не применялась. Лишь в 1896 году на судоремонтных
+                    мастерских, где в настоящее время расположен судоремонтный завод имени III-го Интернационала, была
+                    пущена первая в городе паровая машина с генератором постоянного тока мощностью 8 киловатт и
+                    напряжением
+                    65 В для освещения. Важнейшей отраслью коммунального хозяйства становится производство
+                    электроэнергии,
+                    как необходимое условие индустриализации и безусловный показатель прогрессивного развития города.
+
+                    Городская дума и Городская управа, оценив перспективы, которые должна была принести с собой
+                    электрификация, предложили произвести облигационный заем на строительство электрической станции. По
+                    мнению Городской управы, она «...доходами от частных потребителей может окупить расходы по своему
+                    содержанию и, следовательно, явится большая экономия в расходах по освещению города. С течением
+                    времени,
+                    развитием и ростом города, собственная городская электрическая станция будет давать доходов еще
+                    больше».
+
+                    После долгой подготовительной работы Городская дума, наконец, представила в присутствии компетентной
+                    комиссии 16 июля 1905 г. проекты и смету расходов на строительство электрической станции. Больше
+                    этот
+                    вопрос в думе не рассматривался.
+
+                    1 мая 1910 г. состоялось открытие электрической станции, а работу свою она фактически начала в 1911
+                    г.
+                    Электростанция построена на правом берегу реки Кутум, где она расположена и по настоящее время. В
+                    1914
+                    г. встал вопрос о дальнейшем расширении электростанции. В 1916-1917 гг. было построено здание новой
+                    станции, а также котельной, введены в действие трансформаторные пункты, проложена кабельная сеть
+                    высокого напряжения.
+
+                    Последующие годы были тяжелыми для Астрахани. Но хоть и медленно реконструкция и расширение
+                    электростанции проводилась, вместе с ней развивались и электрические сети города. В 1932 году было
+                    закончено строительство второй очереди городской электростанции, мощность ее составила 5600кВт.
+
+                    После окончания Великой Отечественной войны развернулись работы по восстановлению и расширению
+                    городского хозяйства. Уже к концу 1947 года стал ощущаться дефицит электрической энергии, что
+                    вызвало
+                    настоятельную необходимость в ускорении строительства и пуска строящейся в городе Астрахани
+                    государственной районной электростанции, которая 31 декабря 1947 года дала в сеть промышленный ток.
+                    В
+                    1951 году были завершены работы по монтажу второй очереди станции.</font>
+            <form action="https://studbooks.net/2125219/matematika_himiya_fizika/istoriya_astrahanskoy_energetiki"
+                target="_blank">
+                <button class="btn">Продолжение следует...</button>
+            </form>
+            <form action="quiz.html" target="_blank">
+                <button class="btn">Тест</button>
+            </form>
+            </p>
+        </ul>
+
+</body>

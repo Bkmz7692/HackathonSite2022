@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Архитектурные памятники Астрахани</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="js\script.js"></script>
+    <style>
+        body {
+            list-style-type: none;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="">Цифровая Астрахань</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="index.html">Главная</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        </li>
+
+        <style>
+            span.quest {
+                font-weight: bold;
+            }
+
+            label {
+                margin-left: 15px;
+            }
+
+            .nav {
+                font-size: 17px;
+            }
+        </style>
+        <div style="border: 2px solid rgb(156, 77, 12); padding: 10px; overflow:auto;">
+            <div style="display:flex; color: brown; justify-content: space-between;">
+
+            </div>
+            <script>
+                var title = '';
+                var subtitle = "<center>Оценим Ваши знания</center>";
+                var questions = [{
+                    text: "В каком году электростанция начала свою работу:",
+                    answers: ["1911 г",
+                        "16 июля 1905 г",
+                        "1 мая 1910 г"
+                    ],
+                    correctAnswer: 0
+                }, {
+                    text: "Электростанция построена...:",
+                    answers: ["на левом берегу реки Кутум",
+                        "на правом берегу реки Кутум",
+                        "расположено за городом"
+                    ],
+                    correctAnswer: 1
+                }, {
+                    text: "Как вы думате почему ее не построили раньше?:",
+                    answers: ["электрическая энергия в промышленных целях почти не применялась",
+                        "не позволял бюджет",
+                        "не было специалистов"
+                    ],
+                    correctAnswer: 0
+                }];
+
+                var yourAns = new Array;
+                var score = 0;
+
+                function Engine(question, answer) {
+                    yourAns[question] = answer;
+                }
+
+                function Score() {
+                    var answerText = "Результаты:\n";
+                    for (var i = 0; i < yourAns.length; ++i) {
+                        var num = i + 1;
+                        answerText = answerText + "\n    Вопрос №" + num + "";
+                        if (yourAns[i] != questions[i].correctAnswer) {
+                            answerText = answerText + "\n    Правильный ответ: " +
+                                questions[i].answers[questions[i].correctAnswer] + "\n";
+                        } else {
+                            answerText = answerText + ": Верно! \n";
+                            ++score;
+                        }
+                    }
+
+                    answerText = answerText + "\nВсего правильных ответов: " + score + "\n";
+
+                    alert(answerText);
+
+                    yourAns = [];
+                    score = 0;
+                    clearForm("quiz");
+                }
+
+                function clearForm(name) {
+                    var f = document.forms[name];
+                    for (var i = 0; i < f.elements.length; ++i) {
+                        if (f.elements[i].checked)
+                            f.elements[i].checked = false;
+                    }
+                }
+            </script>
+            <h2>
+                <script>
+                    document.write(title)
+                </script>
+            </h2>
+            <h3>
+                <script>
+                    document.write(subtitle)
+                </script>
+            </h3>
+            <center>
+                <form name="quiz">
+                    <ol>
+                        <script>
+                            for (var q = 0; q < questions.length; ++q) {
+                                var question = questions[q];
+                                var idx = 1 + q;
+
+                                document.writeln('<li><span class="quest">' + question.text + '</span><br>');
+                                for (var i in question.answers) {
+                                    document.writeln('<label><input type=radio name="q' + idx + '" value="' + i +
+                                        '" onClick="Engine(' + q + ', this.value)"> ' + question.answers[i] + '</label><br>');
+                                }
+                                document.writeln('</li>');
+                            }
+                        </script>
+                    </ol>
+                    <br>
+                    <input type="button" onClick="Score()" value="Проверить результаты" class="btn">
+                </form>
+            </center>
+
+        </div>
